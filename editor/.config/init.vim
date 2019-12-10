@@ -107,6 +107,11 @@ endfunction
 " nmap <silent> F <Plug>(ale_lint)
 " nmap <silent> <C-l> <Plug>(ale_detail)
 " nmap <silent> <C-g> :close<cr>
+"
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" Search workspace symbols
+nnoremap <silent> gw :<C-u>CocList -I symbols<cr>
 
 " -----------------------------------------------------------------------------------------
 "                           COMMON SETTINGS
@@ -254,11 +259,11 @@ nnoremap ; :
 nnoremap : ;
 
 " Open hotkeys
-map <C-p> :Files<CR>
-nmap <leader>; :Buffers<CR>
+noremap <C-p> :Files<CR>
+nnoremap <leader>; :Buffers<CR>
 
 " Quick-save
-nmap <leader>w :w<CR>
+nnoremap <leader>w :w<CR>
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
 
@@ -325,9 +330,10 @@ function! s:list_cmd()
   return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
 endfunction
 
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+" Not working
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+"   \                               'options': '--tiebreak=index'}, <bang>0)
 
 
 " Open new file adjacent to current file
