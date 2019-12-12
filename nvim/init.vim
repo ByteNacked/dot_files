@@ -34,6 +34,12 @@ Plug 'plasticboy/vim-markdown'
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+"Multiple selection
+Plug 'terryma/vim-multiple-cursors'
+
+" Minimap
+" Plug 'https://github.com/severin-lemaignan/vim-minimap.git'
+
 ""Surround is all about surroundings, commands cs"', ds etc.
 "Plugin 'tpope/vim-surround'
 "" Famous unimpared plugin
@@ -257,6 +263,8 @@ set list
 " ; as :
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 " Open hotkeys
 noremap <C-p> :Files<CR>
