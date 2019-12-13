@@ -37,6 +37,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Multiple selection
 Plug 'terryma/vim-multiple-cursors'
 
+" Visualize marks
+Plug 'kshenoy/vim-signature'
+
 " Minimap
 " Plug 'https://github.com/severin-lemaignan/vim-minimap.git'
 
@@ -150,7 +153,8 @@ set printfont=:h10
 set printencoding=utf-8
 set printoptions=paper:letter
 
-" Always draw sign column. Prevent buffer moving when adding/deleting sign.
+"
+" Visualize marksAlways draw sign column. Prevent buffer moving when adding/deleting sign.
 set signcolumn=yes
 
 " Sane splits
@@ -402,7 +406,6 @@ nmap <F8> :TagbarToggle<CR>
 "let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
-
 " Reverse letters in selection
 vnoremap <silent> <Leader>is :<C-U>let old_reg_a=@a<CR>
  \:let old_reg=@"<CR>
@@ -412,5 +415,9 @@ vnoremap <silent> <Leader>is :<C-U>let old_reg_a=@a<CR>
  \gvc<C-R>a<Esc>
  \:let @a=old_reg_a<CR>
  \:let @"=old_reg<CR>
+
+" Search for visually selected text
+" https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 
