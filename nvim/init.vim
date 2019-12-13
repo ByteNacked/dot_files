@@ -375,6 +375,15 @@ nnoremap <leader>q g<c-g>
 noremap <leader>m ct_
 noremap <leader>n ct-
 
+" Tab switching
+nnoremap <F1> 1gt
+nnoremap <F2> 2gt
+nnoremap <F3> 3gt
+nnoremap <F4> 4gt
+nnoremap <F5> 5gt
+nnoremap <F6> 6gt
+nnoremap <F7> 7gt
+
 " ------------------------------------------------------------------------------
 "                         COLOR SCHEMES
 " ------------------------------------------------------------------------------
