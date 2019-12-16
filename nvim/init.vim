@@ -197,7 +197,7 @@ set expandtab        " expand tabs to spaces
 set textwidth=120
 " turn syntax highlighting on
 " turn line numbers on
-" set relativenumber 
+set relativenumber 
 set number 
 " highlight matching braces
 set showmatch
@@ -243,7 +243,7 @@ set incsearch
 " Set short message
 set shortmess=at
 " Middle-click paste with mouse
-set mouse=a
+" set mouse=a
 " Highlight cursorline
 set cursorline
 set cursorcolumn
@@ -287,9 +287,11 @@ let g:lightline = {
 "                       HOTKEYS
 " =============================================================================
 "
+" List of unused: https://vim.fandom.com/wiki/Unused_keys
+"
 "test  mapping
 " inoremap <leader>d <C-R>=strftime("%Y-%m-%dT%H:%M")<CR>
-"
+
 " ; as :
 nnoremap ; :
 nnoremap : ;
@@ -414,19 +416,30 @@ nnoremap <F7> 7gt
 "
 let g:EasyMotion_do_mapping = 0
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  <A-f> <Plug>(easymotion-bd-f)
+nmap <A-f> <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
+nmap <A-s> <Plug>(easymotion-overwin-f2)
 
 " Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+map  <A-l> <Plug>(easymotion-bd-jk)
+nmap <A-l> <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader>a <Plug>(easymotion-bd-w)
-nmap <Leader>a <Plug>(easymotion-overwin-w)
+map  <A-w> <Plug>(easymotion-bd-w)
+nmap <A-w> <Plug>(easymotion-overwin-w)
+
+" ===== SIGNATURE HOTKEYS =====
+"
+nnoremap <leader>j :<C-U>call signature#mark#Goto("next", "spot", "global")<CR>
+nnoremap <leader>k :<C-U>call signature#mark#Goto("prev", "spot", "global")<CR>
+nnoremap <A-j> ]'
+nnoremap <A-k> ['
+vnoremap <A-j> ]'
+vnoremap <A-k> ['
+nmap <leader>t m.
+nmap <c-space> m.
 
 " ------------------------------------------------------------------------------
 "                         COLOR SCHEMES
