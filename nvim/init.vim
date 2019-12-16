@@ -40,6 +40,12 @@ Plug 'terryma/vim-multiple-cursors'
 " Visualize marks
 Plug 'kshenoy/vim-signature'
 
+" Git branch plugin
+Plug 'itchyny/vim-gitbranch'
+
+" Easy motion plugin
+Plug 'easymotion/vim-easymotion'
+
 " Minimap
 " Plug 'https://github.com/severin-lemaignan/vim-minimap.git'
 
@@ -218,6 +224,9 @@ nnoremap ? ?\v
 nnoremap / /\v
 cnoremap %s/ %sm/
 
+" Switch buf behaviour
+set switchbuf=useopen,usetab
+
 " =============================================================================
 " # GUI settings
 " =============================================================================
@@ -257,6 +266,23 @@ set laststatus=2
 set listchars=tab:>@,trail:~,extends:>,precedes:<,space:·,
 set list
 
+" == LIGHTLINE SETTINGS ==
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'modified' ], ['filename', 'gitbranch'] ],
+      \   'right': [ [ 'lineinfo' ], [ 'percent' ], ['fileformat', 'fileencoding', 'filetype',] ]
+      \ },
+      \ 'inactive': {
+      \   'left': [ [ 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ], [ 'percent' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+
 " =============================================================================
 "                       HOTKEYS
 " =============================================================================
@@ -286,27 +312,27 @@ nnoremap <leader>, :set invlist<cr>
 nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
 
-" in normal mode F2 will save the file
-nmap <F2> :w<CR>
-" in insert mode F2 will exit insert, save, enters insert again
-"imap <F2> <ESC>:w<CR>i
-imap <F2> <ESC>:w<CR>
-" switch between header/source with F4
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" build using makeprg with <F5>
-map <F5> :make<CR><CR>
-" run python script
-map <S-F5> <F2>:!C:/Python27/python %<CR><CR>
-" create doxygen comment
-map <F6> :Dox<CR><CR>
-" recreate tags file with F7
-map <F7> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR><CR>
-" build using makeprg with <S-F7>
-map <S-F7> :make clean all<CR><CR>
-" goto definition with F12
-map <F12> <C-]>
-" fullscreen toggle
-map <C-CR> :WToggleFullscreen<CR>
+" "" in normal mode F2 will save the file
+" "nmap <F2> :w<CR>
+" "" in insert mode F2 will exit insert, save, enters insert again
+" ""imap <F2> <ESC>:w<CR>i
+" "imap <F2> <ESC>:w<CR>
+" "" switch between header/source with F4
+" "map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+" "" build using makeprg with <F5>
+" "map <F5> :make<CR><CR>
+" "" run python script
+" "map <S-F5> <F2>:!C:/Python27/python %<CR><CR>
+" "" create doxygen comment
+" "map <F6> :Dox<CR><CR>
+" "" recreate tags file with F7
+" "map <F7> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR><CR>
+" "" build using makeprg with <S-F7>
+" "map <S-F7> :make clean all<CR><CR>
+" "" goto definition with F12
+" "map <F12> <C-]>
+" "" fullscreen toggle
+" "map <C-CR> :WToggleFullscreen<CR>
 
 " Ctrl+h to stop searching
 vnoremap <C-h> :nohlsearch<cr>
@@ -318,8 +344,8 @@ vnoremap <C-f> :sus<cr>
 nnoremap <C-f> :sus<cr>
 
 " Jump to start and end of line using the home row keys
-map H ^
-map L $
+" map H ^
+" map L $
 
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
@@ -384,6 +410,24 @@ nnoremap <F5> 5gt
 nnoremap <F6> 6gt
 nnoremap <F7> 7gt
 
+" ===== EASY MOTION HOTKEYS =====
+"
+let g:EasyMotion_do_mapping = 0
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>a <Plug>(easymotion-bd-w)
+nmap <Leader>a <Plug>(easymotion-overwin-w)
+
 " ------------------------------------------------------------------------------
 "                         COLOR SCHEMES
 " ------------------------------------------------------------------------------
@@ -428,5 +472,10 @@ vnoremap <silent> <Leader>is :<C-U>let old_reg_a=@a<CR>
 " Search for visually selected text
 " https://vim.fandom.com/wiki/Search_for_visually_selected_text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+" AUTOSAVE SETTINGS
+" Save on focus lost
+" :au FocusLost * silent! wa
+" :set autowrite
 
 
