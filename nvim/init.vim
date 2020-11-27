@@ -15,13 +15,18 @@ call plug#begin()
 " Color scheme
 Plug 'tomasiser/vim-code-dark'
 
+" Git Magit
+Plug 'jreybert/vimagit'
+
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
+" Nerd tree
+Plug 'preservim/nerdtree'
 
 " Fuzzy finder
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -29,13 +34,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
-Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Plug 'plasticboy/vim-markdown'
 
 " Semantic language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "Multiple selection
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 
 " Visualize marks
 Plug 'kshenoy/vim-signature'
@@ -44,7 +50,10 @@ Plug 'kshenoy/vim-signature'
 Plug 'itchyny/vim-gitbranch'
 
 " Easy motion plugin
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
+
+" Syntax highlighting for javascript libraries
+Plug 'othree/javascript-libraries-syntax.vim'
 
 " Minimap
 " Plug 'https://github.com/severin-lemaignan/vim-minimap.git'
@@ -122,9 +131,18 @@ endfunction
 " nmap <silent> F <Plug>(ale_lint)
 " nmap <silent> <C-l> <Plug>(ale_detail)
 " nmap <silent> <C-g> :close<cr>
-"
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
+
+" Applying CocAction command
+nmap <leader>a :<C-u>CocAction<cr>
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 " Search workspace symbols
 nnoremap <silent> gw :<C-u>CocList -I symbols<cr>
 
@@ -158,6 +176,9 @@ set nojoinspaces
 set printfont=:h10
 set printencoding=utf-8
 set printoptions=paper:letter
+
+" enable Normal mode keys in ru layout
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 "
 " Visualize marksAlways draw sign column. Prevent buffer moving when adding/deleting sign.
@@ -292,12 +313,6 @@ let g:lightline = {
 "test  mapping
 " inoremap <leader>d <C-R>=strftime("%Y-%m-%dT%H:%M")<CR>
 
-" ; as :
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
-
 " Open hotkeys
 noremap <C-p> :Files<CR>
 nnoremap <leader>; :Buffers<CR>
@@ -340,10 +355,10 @@ nnoremap <right> :bn<CR>
 vnoremap <C-h> :nohlsearch<cr>
 nnoremap <C-h> :nohlsearch<cr>
 
-" Suspend with Ctrl+f
-inoremap <C-f> :sus<cr>
-vnoremap <C-f> :sus<cr>
-nnoremap <C-f> :sus<cr>
+" Suspend with Ctrl+f NOTE: useless to me
+" inoremap <C-f> :sus<cr>
+" vnoremap <C-f> :sus<cr>
+" nnoremap <C-f> :sus<cr>
 
 " Jump to start and end of line using the home row keys
 " map H ^
@@ -356,7 +371,7 @@ noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search
-noremap <leader>s :Rg
+noremap <leader>s :Rg 
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -430,6 +445,9 @@ nmap <A-l> <Plug>(easymotion-overwin-line)
 map  <A-w> <Plug>(easymotion-bd-w)
 nmap <A-w> <Plug>(easymotion-overwin-w)
 
+" Close all buffers but this one
+map <leader>o :%bd!\|e#<cr>
+
 " ===== SIGNATURE HOTKEYS =====
 "
 nnoremap <leader>j :<C-U>call signature#mark#Goto("next", "spot", "global")<CR>
@@ -452,7 +470,7 @@ nmap <c-space> m.
 "set background=dark
 "let g:molokai_original = 1
 ""let g:rehash256 = 1
-"colorscheme molokai
+"colorjcheme molokai
 
 set t_Co=256
 set t_ut=
@@ -491,4 +509,12 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 " :au FocusLost * silent! wa
 " :set autowrite
 
+" NERDTree SETTINGS
+let NERDTreeShowHidden=1
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+" autocmd vimenter * NERDTree
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+hi Normal guibg=NONE ctermbg=NONE
 
