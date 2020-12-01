@@ -113,8 +113,8 @@ inoremap <silent><expr> <c-.> coc#refresh()
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " 'Smart' nevigation
-nmap <silent> E <Plug>(coc-diagnostic-prev)
-nmap <silent> W <Plug>(coc-diagnostic-next)
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -224,8 +224,6 @@ set number
 set showmatch
 " intelligent comments
 set comments=sl:/*,mb:\ *,elx:\ */
-" word higlight on (of 
-"set hlsearch
 
 " Proper search
 set incsearch
@@ -248,6 +246,12 @@ cnoremap %s/ %sm/
 " Switch buf behaviour
 set switchbuf=useopen,usetab
 
+" Clipboard integration
+set clipboard^=unnamed,unnamedplus
+
+" Auto save on buffer change
+set autowriteall
+
 " =============================================================================
 " # GUI settings
 " =============================================================================
@@ -264,7 +268,7 @@ set incsearch
 " Set short message
 set shortmess=at
 " Middle-click paste with mouse
-" set mouse=a
+set mouse=a
 " Highlight cursorline
 set cursorline
 set cursorcolumn
@@ -372,7 +376,7 @@ noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search
 noremap <leader>s :Rg 
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'down': '~40%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -380,10 +384,10 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
+" function! s:list_cmd()
+"   let base = fnamemodify(expand('%'), ':h:.:S')
+"   return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+" endfunction
 
 " Not working
 " command! -bang -nargs=? -complete=dir Files
@@ -488,7 +492,6 @@ nmap <F8> :TagbarToggle<CR>
 
 "Setting for airline status bar
 "let g:airline#extensions#tabline#enabled = 1
-set laststatus=2
 
 " Reverse letters in selection
 vnoremap <silent> <Leader>is :<C-U>let old_reg_a=@a<CR>
@@ -511,10 +514,11 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " NERDTree SETTINGS
 let NERDTreeShowHidden=1
+let NERDTreeWinSize=60
 " How can I open a NERDTree automatically when vim starts up if no files were specified?
 " autocmd vimenter * NERDTree
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 hi Normal guibg=NONE ctermbg=NONE
 
