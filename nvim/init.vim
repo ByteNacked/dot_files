@@ -90,7 +90,7 @@ let g:rust_clip_command = 'xclip -selection clipboard'
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 " Use tab for trigger completion with characters ahead and navigate.
@@ -100,19 +100,23 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
 " Use <c-.> to trigger completion.
 inoremap <silent><expr> <c-.> coc#refresh()
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" 'Smart' nevigation
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Alt variant
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" 'Smart' navigation
 nmap <silent> gp <Plug>(coc-diagnostic-prev)
 nmap <silent> gn <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
@@ -140,11 +144,31 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Applying CocAction command
 nmap <leader>a :<C-u>CocAction<cr>
+" Analog?
+"nnoremap <silent> <space>a  :CocAction<cr>
+
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Find symbol of current document.
+nnoremap <silent> gss  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> gw :<C-u>CocList -I symbols<cr>
+
+" Use <TAB> for selections ranges.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 " -----------------------------------------------------------------------------------------
 "                           COMMON SETTINGS
@@ -326,7 +350,7 @@ nnoremap <leader>w :w<CR>
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
 
-" <leader>, shows/hides hidden characters
+" <leader>, toogle, shows/hides hidden characters
 nnoremap <leader>, :set invlist<cr>
 
 " Left and right can switch buffers
@@ -515,6 +539,7 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 " NERDTree SETTINGS
 let NERDTreeShowHidden=1
 let NERDTreeWinSize=60
+let g:NERDTreeMouseMode=3
 " How can I open a NERDTree automatically when vim starts up if no files were specified?
 " autocmd vimenter * NERDTree
 autocmd StdinReadPre * let s:std_in=1

@@ -328,7 +328,7 @@ selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  save_to_clipboard: false
+  save_to_clipboard: true 
 
 #cursor:
   # Cursor style
@@ -631,7 +631,7 @@ live_config_reload: true
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
   #- { key: Paste,                                action: Paste          }
   #- { key: Copy,                                 action: Copy           }
   #- { key: L,         mods: Control,             action: ClearLogNotice }
@@ -672,9 +672,11 @@ live_config_reload: true
   #- { key: Down,                        mode: Vi, action: Down                    }
   #- { key: Left,                        mode: Vi, action: Left                    }
   #- { key: Right,                       mode: Vi, action: Right                   }
-  #- { key: Key0,                        mode: Vi, action: First                   }
-  #- { key: Key4,   mods: Shift,         mode: Vi, action: Last                    }
-  #- { key: Key6,   mods: Shift,         mode: Vi, action: FirstOccupied           }
+  - { key: Key0,                        mode: Vi, action: First                   }
+  - { key: Key4,   mods: Shift,         mode: Vi, action: Last                    }
+  - { key: 5,      mods: Shift,         mode: Vi, action: Last                    }
+  - { key: Key6,   mods: Shift,         mode: Vi, action: FirstOccupied           }
+  - { key: 7,      mods: Shift,         mode: Vi, action: FirstOccupied           }
   #- { key: H,      mods: Shift,         mode: Vi, action: High                    }
   #- { key: M,      mods: Shift,         mode: Vi, action: Middle                  }
   #- { key: L,      mods: Shift,         mode: Vi, action: Low                     }
@@ -685,6 +687,7 @@ live_config_reload: true
   #- { key: W,      mods: Shift,         mode: Vi, action: WordRight               }
   #- { key: E,      mods: Shift,         mode: Vi, action: WordRightEnd            }
   #- { key: Key5,   mods: Shift,         mode: Vi, action: Bracket                 }
+  - { key: 6,      mods: Shift,         mode: Vi, action: Bracket                 }
   #- { key: Slash,                       mode: Vi, action: SearchForward           }
   #- { key: Slash,  mods: Shift,         mode: Vi, action: SearchBackward          }
   #- { key: N,                           mode: Vi, action: SearchNext              }
@@ -741,7 +744,7 @@ live_config_reload: true
   #   - Info
   #   - Debug
   #   - Trace
-  #log_level: Warn
+  #log_level: Trace 
 
   # Print all received window events.
   #print_events: false
