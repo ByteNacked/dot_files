@@ -11,7 +11,6 @@ filetype off                  " required
 set noswapfile                "Disable swapping fiels
 
 call plug#begin()
-
 " Color scheme
 Plug 'tomasiser/vim-code-dark'
 
@@ -35,6 +34,7 @@ Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'ziglang/zig.vim'
 " Plug 'plasticboy/vim-markdown'
 
 " Semantic language support
