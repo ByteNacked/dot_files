@@ -35,6 +35,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'ziglang/zig.vim'
+Plug 'neovimhaskell/haskell-vim'
 " Plug 'plasticboy/vim-markdown'
 
 " Semantic language support
@@ -54,6 +55,9 @@ Plug 'itchyny/vim-gitbranch'
 
 " Syntax highlighting for javascript libraries
 Plug 'othree/javascript-libraries-syntax.vim'
+
+" Grammar checking
+Plug 'rhysd/vim-grammarous'
 
 " Minimap
 " Plug 'https://github.com/severin-lemaignan/vim-minimap.git'
@@ -156,8 +160,8 @@ nnoremap <silent> gss  :<C-u>CocList outline<cr>
 nnoremap <silent> gw :<C-u>CocList -I symbols<cr>
 
 " Use <TAB> for selections ranges.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -546,4 +550,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 hi Normal guibg=NONE ctermbg=NONE
+
+" INSERT CURRENT DATE
+nnoremap <F5> "=strftime("%Y-%m-%d")<CR>P
+inoremap <F5> <C-R>=strftime("%Y-%m-%d")<CR>
 
